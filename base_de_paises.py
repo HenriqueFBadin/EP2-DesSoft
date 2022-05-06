@@ -1,3 +1,4 @@
+import base_de_dados
 def normaliza(dicio):
     dicio_final = {}
     for continente, conteudo in dicio.items():
@@ -6,3 +7,7 @@ def normaliza(dicio):
         dados['continente'] = continente
     
     return(dicio_final)
+
+base_organizada=(normaliza(base_de_dados.DADOS))
+
+#FIM
