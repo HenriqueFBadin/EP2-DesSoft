@@ -106,8 +106,9 @@ while i>-1:
     
     else:
         distancias[palpite] = distancia
+        print('Distâncias: ')
         for elemento in distancias.items():
-            print('Distâncias: \n    {0:.3f} km -> {1}' .format(elemento[1],elemento[0]))
+            print('    {0:.3f} km -> {1}' .format(elemento[1],elemento[0]))
         
         i-=1
 
