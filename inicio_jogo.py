@@ -52,10 +52,8 @@ cor_bandeira=(base_organizada[pais_acerto]["bandeira"])
 for cor in cor_bandeira:
     if cor_bandeira[cor]!=0:
         lista_cores.append(cor)
-print(lista_cores)
 if "outras" in lista_cores:
     lista_cores.remove("outras")
-print(lista_cores)
 
 
 distancias = {}
@@ -67,8 +65,13 @@ while i>0:
     print('Você tem {0} tentativa(s)' .format(i))
     palpite = input('Qual o seu palpite? ')
 
-    #Inventario e desistencia:
-        #palpite.lower() == "desisto" or palpite.lower() == "inventário":
+    if palpite == 'desisto':
+        if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
+            print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
+            break
+    
+    #Inventario:
+        #palpite.lower() == "inventário":
     if palpite in base_organizada.keys():
         pd_escolhido=(pais_escolhido(palpite, base_organizada))
 
@@ -143,4 +146,5 @@ while i>0:
         if input("Quer jogar novamente? [s/n] ")=="s":
             i=20
     else:
+        print('Até a próxima!')
         i-=0
