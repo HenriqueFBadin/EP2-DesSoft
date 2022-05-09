@@ -52,8 +52,10 @@ cor_bandeira=(base_organizada[pais_acerto]["bandeira"])
 for cor in cor_bandeira:
     if cor_bandeira[cor]!=0:
         lista_cores.append(cor)
+print(lista_cores)
 if "outras" in lista_cores:
     lista_cores.remove("outras")
+
 
 
 distancias = {}
@@ -70,8 +72,8 @@ while i>0:
             print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
             break
     
-    #Inventario:
-        #palpite.lower() == "inventário":
+    #Inventario e desistencia:
+        #palpite.lower() == "desisto" or palpite.lower() == "inventário":
     if palpite in base_organizada.keys():
         pd_escolhido=(pais_escolhido(palpite, base_organizada))
 
@@ -98,11 +100,16 @@ while i>0:
 
         print("Mercado de Dicas")
         print("----------------------------------------")
-        print('1. Cor da bandeira  - custa 4 tentativas')
-        print('2. Letra da capital - custa 3 tentativas')
-        print('3. Área             - custa 6 tentativas')
-        print('4. População        - custa 5 tentativas')
-        print('5. Continente       - custa 7 tentativas')
+        if i>= 4:
+            print('1. Cor da bandeira  - custa 4 tentativas')
+        if i>=3:
+            print('2. Letra da capital - custa 3 tentativas')
+        if i>=6:
+            print('3. Área             - custa 6 tentativas')
+        if i>=5:
+            print('4. População        - custa 5 tentativas')
+        if i>=7:
+            print('5. Continente       - custa 7 tentativas')
         print('0. Sem dica')
         print("----------------------------------------")
                     
