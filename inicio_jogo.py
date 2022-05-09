@@ -50,7 +50,7 @@ while i>-1:
                 i-=4
             elif input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="0" or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="1"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="2"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="3"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="4"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="5":
                 print("Opção inválida, tente novamente!")
-    palpite = input('Qual o seu palpite? ')
+            palpite = input('Qual o seu palpite? ')
 
     #Dados do país escolhido pelo usuário:
     while (palpite.lower() not in base_de_paises.base_organizada):
