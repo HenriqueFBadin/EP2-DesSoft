@@ -52,16 +52,18 @@ cor_bandeira=(base_organizada[pais_acerto]["bandeira"])
 for cor in cor_bandeira:
     if cor_bandeira[cor]!=0:
         lista_cores.append(cor)
-print(lista_cores)
 if "outras" in lista_cores:
     lista_cores.remove("outras")
 
 
-
 distancias = {}
-colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
+colores = []
+mensagem = ''
 i = 20
 j = 0
+
+#Dicionário para colocar todas as dicas
+inventario = {'1':mensagem} #'2':letra_capital, '3': area, '4': populacao, '5':continente}
 mensagem=''
 while i>0:
     print('Você tem {0} tentativa(s)' .format(i))
@@ -72,8 +74,14 @@ while i>0:
             print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
             break
     
-    #Inventario e desistencia:
-        #palpite.lower() == "desisto" or palpite.lower() == "inventário":
+    if palpite.lower() == 'inventario':
+        print('Distâncias: ') #essas distâncias precisarão se tornar listas para encaixar na função e serem colocadas em ordem
+        for elemento in distancias.keys():
+            print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
+        
+        print('Dicas: ' )#.format(inventario))
+
+
     if palpite in base_organizada.keys():
         pd_escolhido=(pais_escolhido(palpite, base_organizada))
 
@@ -113,45 +121,53 @@ while i>0:
         print('0. Sem dica')
         print("----------------------------------------")
                     
-        #opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ")
+        #opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ") As opções devem sumir com o tempo 
 
         if input("\nEscolha sua opção [0|1|2|3|4|5]: ") == "1":
             
             if lista_cores!=[]:
                 cor_escolhida=random.choice(lista_cores)
-                    
+                
+                colores.append(cor_escolhida)
                 lista_cores.remove(cor_escolhida)
 
-                if j == 0:
-                    colores = colores + cor_escolhida
-                    for elemento in distancias.keys():
-                        print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
-                    mensagem = '  - Cores da bandeira: {0}' .format(colores)
-                    print(mensagem)
-                    j += 1
+                for tom in colores:
+                    if len(colores) == 1:
+                        mensagem = tom
+                        cor_antiga = mensagem
                     
-                elif j>0:
+                    else:
+                        mensagem = cor_antiga + ',' + ' ' + tom
+
+                inventario['1']=colores    
+                print('  - Cores da bandeira: {0}' .format(mensagem))
+
+                        #for elemento in distancias.keys():
+                         #   print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
                     
-                    for elemento in distancias.keys():
-                        print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
-                    print(mensagem + ',' + ' ' + cor_escolhida)
-                    mensagem = mensagem + ',' + ' ' + cor_escolhida    
+                #elif j>0:
+                    
+                   # for elemento in distancias.keys():
+                     #   print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
+                    #print(mensagem + ',' + ' ' + cor_escolhida)
+                    #mensagem = mensagem + ',' + ' ' + cor_escolhida 
+                    #print(inventario)   
 
                 i-=4
             
             else:
                 for elemento in distancias.keys():
                         print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
-                print(mensagem)
+                #print(mensagem)
                 print('A bandeira não tem mais cores')
 
-    elif palpite not in base_organizada.keys():
-        palpite = print('Esse país não existe! Tente de novo.')
+   # elif palpite not in base_organizada.keys():
+    #    palpite = print('Esse país não existe! Tente de novo.')
 
-    if i==0:
-        print("Você perdeu! Seu país era: {}".format(pais_acerto))
-        if input("Quer jogar novamente? [s/n] ")=="s":
-            i=20
-    else:
-        print('Até a próxima!')
-        i-=0
+  #  if i==0:
+   #     print("Você perdeu! Seu país era: {}".format(pais_acerto))
+        #if input("Quer jogar novamente? [s/n] ")=="s":
+         #   i=20
+   # else:
+    #    i-=0
+print('Até a próxima!')
