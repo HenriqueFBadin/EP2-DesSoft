@@ -1,4 +1,3 @@
-from email import message
 import random
 import base_de_dados
 import distancia_de_haversine
@@ -169,6 +168,7 @@ while i>0:
                 mensagem_opcoes = mensagem_opcoes + numero + '|' #Estou aqui
             contador += 1
 
+        #lista_opcoes=['0','|','1','|','2','|','3','|','4','|','5']
         opcao = input("\nEscolha sua opção [{}]: ".format(mensagem_opcoes)) #As opções somem com o tempo 
         opcoes = [] #Zerar opções para que elas não acumulem
 
@@ -197,16 +197,16 @@ while i>0:
             else:
                 for elemento in distancias:
                     print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
-                #print(mensagem)
+                print(mensagem)
                 print('A bandeira não tem mais cores')
 
-   # elif palpite not in base_organizada.keys():
-    #    palpite = print('Esse país não existe! Tente de novo.')
+    elif palpite not in base_organizada.keys():
+        palpite = print('Esse país não existe! Tente de novo.')
 
-  #  if i==0:
-   #     print("Você perdeu! Seu país era: {}".format(pais_acerto))
-        #if input("Quer jogar novamente? [s/n] ")=="s":
-         #   i=20
-   # else:
-    #    i-=0
+    if i==0:
+        print("Você perdeu! Seu país era: {}".format(pais_acerto))
+        if input("Quer jogar novamente? [s/n] ")=="s":
+           i=20
+    else:
+        i-=0
 print('Até a próxima!')
