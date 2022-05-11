@@ -34,6 +34,9 @@ def sorteia_pais(dicionario):
 pais_acerto=(sorteia_pais(base_organizada))
 dados_ps = (dados_sorteados(pais_acerto, base_organizada))
 
+print(" ============================ ")
+print("|"+" "*28+ "|")
+print("| Bem-vindo ao Insper Países |")
 print("|"+" "*28+ "|")
 print(" ==== Design de Software ====\n")
 print("Comandos:")
