@@ -1,6 +1,7 @@
 import random
 import base_de_dados
 import distancia_de_haversine
+import lista_ordenada
 
 def normaliza(dicio):
     dicio_final = {}
@@ -49,21 +50,27 @@ for cor in cor_bandeira:
 if "outras" in lista_cores:
     lista_cores.remove("outras")
 
-distancias = {}
+distancias = []
 colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
 i = 20
 j = 0
 mensagem=''
 while i>0:
+
     print('Você tem {0} tentativa(s)' .format(i))
     palpite = input('Qual o seu palpite? ')
 
-        #Inventario e desistencia:
-            #palpite.lower() == "desisto" or palpite.lower() == "inventário":
+    #Desistencia
+    if palpite == 'desisto':
+        if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
+            print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
+            break
+    
+    #Dados país escolhido
     if palpite in base_organizada.keys():
         pd_escolhido=(pais_escolhido(palpite, base_organizada))
 
-            #Distância entre os dois países, o escolhido e o sorteado:
+        #Distância entre os dois países, o escolhido e o sorteado:
         distancia = (distancia_de_haversine.haversine(base_de_dados.EARTH_RADIUS, pd_escolhido['geo']['latitude'], pd_escolhido['geo']['longitude'], dados_ps['geo']['latitude'], dados_ps['geo']['longitude']))
 
         if dados_ps==pd_escolhido:
@@ -73,10 +80,11 @@ while i>0:
             else:
                 i=0
         else:
-            distancias[palpite] = distancia
-            print('Distâncias: ')
-            for elemento in distancias.items():
-                print('    {0:.3f} km -> {1}' .format(elemento[1],elemento[0]))
+            distancias = lista_ordenada.adiciona_em_ordem(palpite,distancia,distancias)
+
+            for elemento in distancias:
+                print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+
             print('Dicas: {}'.format(mensagem))
             i-=1
     #Sistema de dicas para cor da bandeira funciona apenas para a 1a tentativa(resolver posteriormente):
@@ -84,11 +92,16 @@ while i>0:
 
         print("Mercado de Dicas")
         print("----------------------------------------")
-        print('1. Cor da bandeira  - custa 4 tentativas')
-        print('2. Letra da capital - custa 3 tentativas')
-        print('3. Área             - custa 6 tentativas')
-        print('4. População        - custa 5 tentativas')
-        print('5. Continente       - custa 7 tentativas')
+        if i>= 4:
+            print('1. Cor da bandeira  - custa 4 tentativas')
+        if i>=3:
+            print('2. Letra da capital - custa 3 tentativas')
+        if i>=6:
+            print('3. Área             - custa 6 tentativas')
+        if i>=5:
+            print('4. População        - custa 5 tentativas')
+        if i>=7:
+            print('5. Continente       - custa 7 tentativas')
         print('0. Sem dica')
         print("----------------------------------------")
 
@@ -119,8 +132,8 @@ while i>0:
                 i-=4
 
             else:
-                for elemento in distancias.keys():
-                        print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
+                for elemento in distancias:
+                    print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
                 print(mensagem)
                 print('A bandeira não tem mais cores')
 
