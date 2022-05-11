@@ -105,9 +105,9 @@ while i>0:
         print('0. Sem dica')
         print("----------------------------------------")
 
-            #opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ")
+        opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ")
 
-        if input("\nEscolha sua opção [0|1|2|3|4|5]: ") == "1":
+        if opcao == "1":
 
             if lista_cores!=[]:
                 cor_escolhida=random.choice(lista_cores)
@@ -116,16 +116,18 @@ while i>0:
 
                 if j == 0:
                     colores = colores + cor_escolhida
-                    for elemento in distancias.keys():
-                        print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
+                    for elemento in distancias:
+                        print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+
+       
                     mensagem = '  - Cores da bandeira: {0}' .format(colores)
                     print(mensagem)
                     j += 1
 
                         
                 elif j>0:
-                    for elemento in distancias.keys():
-                        print('    {0:.3f} km -> {1}' .format(distancias[elemento],elemento))
+                    for elemento in distancias:
+                        print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
                     print(mensagem + ', ' + cor_escolhida)
                     mensagem += ', ' + cor_escolhida
 
@@ -139,6 +141,18 @@ while i>0:
 
                     #elif input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="0" or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="1"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="2"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="3"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="4"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="5":
                         #print("Opção inválida, tente novamente!")
+        if opcao == "3":
+            print('  - Área: {} km2' .format(base_organizada[pais_acerto]['area']))
+            i -= 6
+
+        if opcao == "4":
+            print('  - População: {} habitantes' .format(base_organizada[pais_acerto]['populacao']))
+            i -= 5
+
+        if opcao == "5":
+            print('  - Continente: {}' .format(base_organizada[pais_acerto]['continente']))
+            i -= 7
+
     elif palpite not in base_organizada.keys():
         print('Esse país não existe! Tente de novo.')
 
