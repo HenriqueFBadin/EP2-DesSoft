@@ -2,6 +2,7 @@ import random
 import base_de_dados
 import distancia_de_haversine
 import lista_ordenada
+import sorteia_letra
 
 def normaliza(dicio):
     dicio_final = {}
@@ -54,6 +55,8 @@ if "outras" in lista_cores:
     lista_cores.remove("outras")
 
 distancias = []
+letras=[]
+dicas={}
 colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
 i = 20
 j = 0
@@ -142,8 +145,16 @@ while i>0:
                 print(mensagem)
                 print('A bandeira não tem mais cores')
 
-                    #elif input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="0" or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="1"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="2"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="3"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="4"or input("\nEscolha sua opção [0|1|2|3|4|5]: ")!="5":
-                        #print("Opção inválida, tente novamente!")
+
+        #Dica 2: sorteio de letra para a escolha dessa opção e adicionamento dessa dica em um dicionário
+        if opcao== "2":
+            i-=3
+            letra_sorteada=sorteia_letra.sorteia_letra(pais_acerto, letras)
+            #Falta verificar se todas as letras da capital já entraram na lista de letras restritas
+            letras.append(letra_sorteada)
+            dicas['letra sorteada']=letras
+            print(dicas)
+        
         if opcao == "3":
             print('  - Área: {} km2' .format(base_organizada[pais_acerto]['area']))
             i -= 6
