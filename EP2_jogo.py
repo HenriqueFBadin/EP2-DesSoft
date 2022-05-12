@@ -126,16 +126,19 @@ while i>0:
                         print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
 
        
-                    mensagem = '  - Cores da bandeira: {0}' .format(colores)
-                    print(mensagem)
+                    mensagem = '{0}' .format(colores)
+                    dicas['  - Cores da bandeira']=mensagem
+                    print(dicas)
                     j += 1
 
                         
                 elif j>0:
                     for elemento in distancias:
                         print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
-                    print(mensagem + ', ' + cor_escolhida)
+                    #print(mensagem + ', ' + cor_escolhida)
                     mensagem += ', ' + cor_escolhida
+                    dicas['  - Cores da bandeira']=mensagem
+                    print(dicas)
 
                 i-=4
 
@@ -152,7 +155,7 @@ while i>0:
             letra_sorteada=sorteia_letra.sorteia_letra(pais_acerto, letras)
             #Falta verificar se todas as letras da capital já entraram na lista de letras restritas
             letras.append(letra_sorteada)
-            dicas['letra sorteada']=letras
+            dicas['  - Letra da capital']=letras
             print(dicas)
         
         if opcao == "3":
