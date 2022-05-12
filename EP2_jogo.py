@@ -35,6 +35,8 @@ def sorteia_pais(dicionario):
 pais_acerto=(sorteia_pais(base_organizada))
 dados_ps = (dados_sorteados(pais_acerto, base_organizada))
 
+
+
 print(" ============================ ")
 print("|"+" "*28+ "|")
 print("| Bem-vindo ao Insper Países |")
@@ -66,33 +68,49 @@ while i>0:
     print('Você tem {0} tentativa(s)' .format(i))
     palpite = input('Qual o seu palpite? ')
 
+    #Inventário:
+    if palpite=='inventario' or palpite== 'inventário':
+        print('Distâncias:')
+        for elemento in distancias:
+            print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+        print('Dicas:')
+        for k, v in dicas.items():
+            print('  {}: {}'.format(k, v))
+
     #Desistencia
-    if palpite == 'desisto':
+    elif palpite == 'desisto':
         if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
             print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
             break
     
     #Dados país escolhido
-    if palpite in base_organizada.keys():
+    elif palpite in base_organizada.keys():
         pd_escolhido=(pais_escolhido(palpite, base_organizada))
 
         #Distância entre os dois países, o escolhido e o sorteado:
         distancia = (distancia_de_haversine.haversine(base_de_dados.EARTH_RADIUS, pd_escolhido['geo']['latitude'], pd_escolhido['geo']['longitude'], dados_ps['geo']['latitude'], dados_ps['geo']['longitude']))
 
+        #País escolhido = País sorteado
         if dados_ps==pd_escolhido:
             print("Parabéns! Você acertou o país em {} tentativas!".format(20-i))
             if input("Quer jogar novamente? [s/n] ")=="s":
                 i=20
             else:
                 i=0
+        
+        #Caso o país escolhido não seja o mesmo que o sorteado:
         else:
             distancias = lista_ordenada.adiciona_em_ordem(palpite,distancia,distancias)
 
+            print('Distâncias:')
             for elemento in distancias:
                 print('    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
-
-            print('Dicas: {}'.format(mensagem))
+            print('Dicas:')
+            for k, v in dicas.items():
+                print('  {}: {}'.format(k, v))
+            
             i-=1
+
     #Sistema de dicas para cor da bandeira funciona apenas para a 1a tentativa(resolver posteriormente):
     elif palpite.lower()=="dica" or palpite.lower()=="dicas":
 
@@ -113,6 +131,7 @@ while i>0:
 
         opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ")
 
+        #Sistema dica 1:
         if opcao == "1":
 
             if lista_cores!=[]:
@@ -158,17 +177,23 @@ while i>0:
             dicas['  - Letra da capital']=letras
             print(dicas)
         
+        #Sistema dica 3:
         if opcao == "3":
-            print('  - Área: {} km2' .format(base_organizada[pais_acerto]['area']))
+            area=(base_organizada[pais_acerto]['area'])
             i -= 6
+            dicas['  - Área']=area
 
+        #Sistema dica 4:
         if opcao == "4":
-            print('  - População: {} habitantes' .format(base_organizada[pais_acerto]['populacao']))
+            população=(base_organizada[pais_acerto]['populacao'])
             i -= 5
+            dicas['  - População']=população+' habitantes'
 
+        #Sistema dica 5:
         if opcao == "5":
-            print('  - Continente: {}' .format(base_organizada[pais_acerto]['continente']))
+            continente=(base_organizada[pais_acerto]['continente'])
             i -= 7
+            dicas['  - Continente']=continente
 
     elif palpite not in base_organizada.keys():
         print('Esse país não existe! Tente de novo.')
