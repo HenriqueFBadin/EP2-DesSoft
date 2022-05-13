@@ -160,10 +160,7 @@ while i>0:
         #Se o País escolhido = País sorteado:
         if dados_ps==pd_escolhido:
             print("Parabéns! Você acertou o país em {} tentativas!".format(20-i))
-            if input("Quer jogar novamente? [s/n] ")=="s":
-                i=20
-            else:
-                i=0
+            i=0
         
         #Caso o país escolhido não seja o mesmo que o sorteado:
         else:
