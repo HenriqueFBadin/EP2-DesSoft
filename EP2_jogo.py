@@ -54,6 +54,45 @@ BLUE    = '\033[34m'
 MAGENTA = '\033[35m'
 RESET   = '\033[39m'
 
+#Função para a mensagem do inventário
+def mensagem_inventario(lista_distancias,dicio_dicas):
+    l = 0
+    print('Distâncias:')
+    for elemento in distancias:
+        if elemento[1]>=10000:
+            print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+        elif elemento[1]>=5000:
+            print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+        elif elemento[1]>=1000:
+            print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+        elif elemento[1]<1000:
+            print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+        
+    print('Dicas:')
+    for k, v in dicio_dicas.items():
+
+        if k == '  - Cores da bandeira':
+            print('  {}: {}'.format(k, v))
+        
+        if k == '  - Letras da capital':
+            for letra in v:
+                if l != 0:
+                    value = v + ', ' + letra
+                    v = value
+
+                if l == 0:
+                    v = letra
+                    l+=1
+
+            print('  {}: {}'.format(k, v))
+        
+        if k == '  - Área' or k == '  - População' or  k == '  - Continente':
+            print('  {}: {}'.format(k, v))
+        
+
+    return()
+
+
 while i>0:
 
     if i==20:
@@ -71,7 +110,9 @@ while i>0:
                 lista_cores.append(cor)
         if "outras" in lista_cores:
             lista_cores.remove("outras")
-                
+
+        tamanho_cores = len(lista_cores) #Utilizado como parametro para as cores esgotadas
+
         distancias = [] #Lista onde adiciona-se as distâncias
         letras=[] #Lista de letras restritas para o sorteio
         dicas={} #Dicionário onde as keys são as dicas e os valores são as respostas
@@ -127,20 +168,7 @@ while i>0:
         else:
             distancias = lista_ordenada.adiciona_em_ordem(palpite,distancia,distancias)
 
-            print('Distâncias:')
-            for elemento in distancias:
-                if elemento[1]>=10000:
-                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=5000:
-                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=1000:
-                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]<1000:
-                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-            print('Dicas:')
-            for k, v in dicas.items():
-                print('  {}: {}'.format(k, v))
-            
+            mensagem_inventario(distancias,dicas)
             i-=1
 
     #Sistema de dicas para cor da bandeira funciona apenas para a 1a tentativa(resolver posteriormente):
@@ -148,6 +176,8 @@ while i>0:
 
         print("Mercado de Dicas")
         print("----------------------------------------")
+        if i<3:
+            print('>>> Infelizmente, acabou seu estoque de dicas! <<<')
         if i>= 4:
             print('1. Cor da bandeira  - custa 4 tentativas')
         if i>=3:
@@ -174,20 +204,6 @@ while i>0:
                 if j == 0:
                     colores += cor_escolhida
                     dicas['  - Cores da bandeira']=colores
-                    print('Distâncias:')
-                    for elemento in distancias:
-                        if elemento[1]>=10000:
-                            print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]>=5000:
-                            print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]>=1000:
-                            print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]<1000:
-                            print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                
-                    print('Dicas:')
-                    for k, v in dicas.items():
-                        print('  {}: {}'.format(k, v))
                     j += 1
 
                         
@@ -195,42 +211,13 @@ while i>0:
 
                     colores+=', ' + cor_escolhida
                     dicas['  - Cores da bandeira']=colores
+                    j += 1
+                
+            if j>=tamanho_cores:
+                print('Cores esgotadas!\n')
 
-                    print('Distâncias:')
-                    for elemento in distancias:
-                        if elemento[1]>=10000:
-                            print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]>=5000:
-                            print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]>=1000:
-                            print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                        elif elemento[1]<1000:
-                            print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                    print('Dicas:')
-                    for k, v in dicas.items():
-                        print('  {}: {}'.format(k, v))
-
-                i-=4
-
-            else:
-            
-                print('Distâncias:')
-                for elemento in distancias:
-                    if elemento[1]>=10000:
-                        print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                    elif elemento[1]>=5000:
-                        print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                    elif elemento[1]>=1000:
-                        print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                    elif elemento[1]<1000:
-                        print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-            
-                print('Dicas:')
-                for k, v in dicas.items():
-                    print('  {}: {}'.format(k, v))
-            
-                print('A bandeira não tem mais cores')
-
+            mensagem_inventario(distancias,dicas)
+            i-=4
 
         #Dica 2: sorteio de letra para a escolha dessa opção e adicionamento dessa dica em um dicionário
         if opcao== "2":
@@ -238,81 +225,32 @@ while i>0:
             letra_sorteada=sorteia_letra.sorteia_letra(pais_acerto, letras)
             #Falta verificar se todas as letras da capital já entraram na lista de letras restritas
             letras.append(letra_sorteada)
-            dicas['  - Letra da capital']=letras
-            print('Distâncias:')
-            for elemento in distancias:
-                if elemento[1]>=10000:
-                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=5000:
-                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=1000:
-                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]<1000:
-                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                
-            print('Dicas:')
-            for k, v in dicas.items():
-                print('  {}: {}'.format(k, v))
-        
+            dicas['  - Letras da capital']=letras
+            l = 0
+
+            mensagem_inventario(distancias,dicas)
+            l = 0
+
         #Sistema dica 3:
         if opcao == "3":
             area=(base_organizada[pais_acerto]['area'])
             i -= 6
-            dicas['  - Área']=area
-            print('Distâncias:')
-            for elemento in distancias:
-                if elemento[1]>=10000:
-                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=5000:
-                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=1000:
-                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]<1000:
-                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                
-            print('Dicas:')
-            for k, v in dicas.items():
-                print('  {}: {}'.format(k, v))
+            dicas['  - Área']=str(area) + ' km2'
+            mensagem_inventario(distancias,dicas)
 
         #Sistema dica 4:
         if opcao == "4":
             população=(base_organizada[pais_acerto]['populacao'])
             i -= 5
             dicas['  - População']=('{} habitantes'.format(população))
-            print('Distâncias:')
-            for elemento in distancias:
-                if elemento[1]>=10000:
-                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=5000:
-                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=1000:
-                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]<1000:
-                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                
-            print('Dicas:')
-            for k, v in dicas.items():
-                print('  {}: {}'.format(k, v))
+            mensagem_inventario(distancias,dicas)
 
         #Sistema dica 5:
         if opcao == "5":
             continente=(base_organizada[pais_acerto]['continente'])
             i -= 7
             dicas['  - Continente']=continente
-            print('Distâncias:')
-            for elemento in distancias:
-                if elemento[1]>=10000:
-                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=5000:
-                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]>=1000:
-                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                elif elemento[1]<1000:
-                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-                    
-            print('Dicas:')
-            for k, v in dicas.items():
-                print('  {}: {}'.format(k, v))
+            mensagem_inventario(distancias,dicas)
             
         if opcao=='0':
             print('Você saiu do mercado.')
