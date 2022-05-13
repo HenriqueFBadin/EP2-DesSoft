@@ -34,13 +34,6 @@ def sorteia_pais(dicionario):
     pais=random.choice(lista_paises)
     return pais
 
-#País que deve ser descoberto:
-pais_acerto=(sorteia_pais(base_organizada))
-
-#Dados do país que deve ser descoberto:
-dados_ps = (dados_sorteados(pais_acerto, base_organizada))
-
-
 #Prints iniciais do jogo:
 print(" ============================ ")
 print("|"+" "*28+ "|")
@@ -53,23 +46,38 @@ print("    desisto    - desiste da rodada")
 print("    inventario - exibe sua posição")
 print("\nUm país foi escolhido, tente adivinhar!")
 
-#Criação de uma lista com as cores da bandeira do país alvo. Usado posteriormente para o sorteio:
-lista_cores=[]
-cor_bandeira=(base_organizada[pais_acerto]["bandeira"])
-for cor in cor_bandeira:
-    if cor_bandeira[cor]!=0:
-        lista_cores.append(cor)
-if "outras" in lista_cores:
-    lista_cores.remove("outras")
-
-distancias = [] #Lista onde adiciona-se as distâncias
-letras=[] #Lista de letras restritas para o sorteio
-dicas={} #Dicionário onde as keys são as dicas e os valores são as respostas
-colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
 i = 20 #Tentativas
-j = 0
-mensagem='' #Print das cores da bandeira
+RED     = '\033[31m'
+GREEN   = '\033[32m'
+YELLOW  = '\033[33m'
+BLUE    = '\033[34m'
+MAGENTA = '\033[35m'
+RESET   = '\033[39m'
+
 while i>0:
+
+    if i==20:
+        #País que deve ser descoberto:
+        pais_acerto=(sorteia_pais(base_organizada))
+
+        #Dados do país que deve ser descoberto:
+        dados_ps = (dados_sorteados(pais_acerto, base_organizada))
+
+        #Criação de uma lista com as cores da bandeira do país alvo. Usado posteriormente para o sorteio:
+        lista_cores=[]
+        cor_bandeira=(base_organizada[pais_acerto]["bandeira"])
+        for cor in cor_bandeira:
+            if cor_bandeira[cor]!=0:
+                lista_cores.append(cor)
+        if "outras" in lista_cores:
+            lista_cores.remove("outras")
+                
+        distancias = [] #Lista onde adiciona-se as distâncias
+        letras=[] #Lista de letras restritas para o sorteio
+        dicas={} #Dicionário onde as keys são as dicas e os valores são as respostas
+        colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
+        mensagem='' #Print das cores da bandeira
+        j = 0
 
     #Palpite do usuário que da início ao jogo:
     print('Você tem {0} tentativa(s)' .format(i))
@@ -80,13 +88,13 @@ while i>0:
         print('Distâncias:')
         for elemento in distancias:
             if elemento[1]>=10000:
-                print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
             elif elemento[1]>=5000:
-                print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
             elif elemento[1]>=1000:
-                print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
             elif elemento[1]<1000:
-                print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
 
         print('Dicas:')
         for k, v in dicas.items():
@@ -95,7 +103,10 @@ while i>0:
     elif palpite == 'desisto':
         if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
             print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
-            break
+            if input("Quer jogar novamente? [s/n] ")=="s":
+                i=20
+            else:
+                break
     
     #Dados país escolhido:
     elif palpite in base_organizada.keys():
@@ -119,13 +130,13 @@ while i>0:
             print('Distâncias:')
             for elemento in distancias:
                 if elemento[1]>=10000:
-                    print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=5000:
-                    print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=1000:
-                    print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]<1000:
-                    print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
             print('Dicas:')
             for k, v in dicas.items():
                 print('  {}: {}'.format(k, v))
@@ -166,13 +177,13 @@ while i>0:
                     print('Distâncias:')
                     for elemento in distancias:
                         if elemento[1]>=10000:
-                            print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]>=5000:
-                            print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]>=1000:
-                            print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]<1000:
-                            print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 
                     print('Dicas:')
                     for k, v in dicas.items():
@@ -188,13 +199,13 @@ while i>0:
                     print('Distâncias:')
                     for elemento in distancias:
                         if elemento[1]>=10000:
-                            print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]>=5000:
-                            print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]>=1000:
-                            print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                         elif elemento[1]<1000:
-                            print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                            print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                     print('Dicas:')
                     for k, v in dicas.items():
                         print('  {}: {}'.format(k, v))
@@ -206,13 +217,13 @@ while i>0:
                 print('Distâncias:')
                 for elemento in distancias:
                     if elemento[1]>=10000:
-                        print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                        print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                     elif elemento[1]>=5000:
-                        print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                        print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                     elif elemento[1]>=1000:
-                        print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                        print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                     elif elemento[1]<1000:
-                        print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                        print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
             
                 print('Dicas:')
                 for k, v in dicas.items():
@@ -231,13 +242,13 @@ while i>0:
             print('Distâncias:')
             for elemento in distancias:
                 if elemento[1]>=10000:
-                    print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=5000:
-                    print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=1000:
-                    print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]<1000:
-                    print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 
             print('Dicas:')
             for k, v in dicas.items():
@@ -251,13 +262,13 @@ while i>0:
             print('Distâncias:')
             for elemento in distancias:
                 if elemento[1]>=10000:
-                    print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=5000:
-                    print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=1000:
-                    print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]<1000:
-                    print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 
             print('Dicas:')
             for k, v in dicas.items():
@@ -271,13 +282,13 @@ while i>0:
             print('Distâncias:')
             for elemento in distancias:
                 if elemento[1]>=10000:
-                    print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=5000:
-                    print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=1000:
-                    print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]<1000:
-                    print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 
             print('Dicas:')
             for k, v in dicas.items():
@@ -291,14 +302,14 @@ while i>0:
             print('Distâncias:')
             for elemento in distancias:
                 if elemento[1]>=10000:
-                    print('\033[0;35;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=5000:
-                    print('\033[0;34;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]>=1000:
-                    print('\033[0;31;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
+                    print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
                 elif elemento[1]<1000:
-                    print('\033[2;32;48m    {0:.3f} km -> {1}' .format(elemento[1], elemento[0]))
-                
+                    print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+                    
             print('Dicas:')
             for k, v in dicas.items():
                 print('  {}: {}'.format(k, v))
