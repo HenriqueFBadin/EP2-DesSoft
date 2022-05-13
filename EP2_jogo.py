@@ -52,6 +52,7 @@ GREEN   = '\033[32m'
 YELLOW  = '\033[33m'
 BLUE    = '\033[34m'
 MAGENTA = '\033[35m'
+CYAN    = '\033[36m'
 RESET   = '\033[39m'
 
 #Função para a mensagem do inventário
@@ -121,7 +122,7 @@ while i>0:
         j = 0
 
     #Palpite do usuário que da início ao jogo:
-    print('Você tem {0} tentativa(s)' .format(i))
+    print('Você tem' + CYAN + ' {0} '.format(i) + RESET + 'tentativa(s)')
     palpite = input('Qual o seu palpite? ')
 
     #Inventário:
