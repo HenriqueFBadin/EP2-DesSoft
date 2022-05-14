@@ -127,20 +127,8 @@ while i>0:
 
     #Inventário:
     if palpite=='inventario' or palpite== 'inventário':
-        print('Distâncias:')
-        for elemento in distancias:
-            if elemento[1]>=10000:
-                print(RED +'    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-            elif elemento[1]>=5000:
-                print(GREEN + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-            elif elemento[1]>=1000:
-                print(YELLOW + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
-            elif elemento[1]<1000:
-                print(MAGENTA + '    {0:.3f} km -> {1}'.format(elemento[1], elemento[0]) + RESET + '')
+        mensagem_inventario(distancias, dicas)
 
-        print('Dicas:')
-        for k, v in dicas.items():
-            print('  {}: {}'.format(k, v))
     #Desistencia:
     elif palpite == 'desisto':
         if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
@@ -220,8 +208,7 @@ while i>0:
         #Dica 2: sorteio de letra para a escolha dessa opção e adicionamento dessa dica em um dicionário
         if opcao== "2":
             i-=3
-            letra_sorteada=sorteia_letra.sorteia_letra(pais_acerto, letras)
-            #Falta verificar se todas as letras da capital já entraram na lista de letras restritas
+            letra_sorteada=sorteia_letra.sorteia_letra(base_organizada[pais_acerto]['capital'], letras)
             letras.append(letra_sorteada)
             dicas['  - Letras da capital']=letras
             l = 0
