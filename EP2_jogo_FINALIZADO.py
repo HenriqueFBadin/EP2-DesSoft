@@ -1,3 +1,4 @@
+from cgitb import reset
 import random
 import base_de_dados
 import distancia_de_haversine
@@ -122,6 +123,7 @@ while i>0:
         opcoes = ['0'] #Opções para as dicas
         ganho = False
         j = 0
+        print(pais_acerto)
 
     #Palpite do usuário que da início ao jogo:
     print('Você tem' + CYAN + ' {0} '.format(i) + RESET + 'tentativa(s)')
@@ -134,7 +136,7 @@ while i>0:
     #Desistencia:
     elif palpite == 'desisto':
         if input('Tem certeza que deseja desistir da rodada? [s/n]') == 's':
-            print('>>> Que deselegante desistir, o país era: {}'.format(pais_acerto))
+            print('>>> Que deselegante desistir, o país era: ' + GREEN+ '{}'.format(pais_acerto)+RESET)
             if input("Quer jogar novamente? [s/n] ")=="s":
                 i=20
             else:
@@ -149,7 +151,7 @@ while i>0:
 
         #Se o País escolhido = País sorteado:
         if dados_ps==pd_escolhido:
-            print("Parabéns! Você acertou o país em {} tentativas!".format(20-i))
+            print("Parabéns! Você acertou o país em " + RED +"{}".format(20-i) + RESET + " tentativas!")
             ganho = True
             i=0
         
@@ -273,7 +275,7 @@ while i>0:
     #Derrota/Pergunta se quer jogar novamente:
     if i==0:
         if ganho != True:
-            print("Você perdeu! Seu país era: {}".format(pais_acerto))
+            print("Você perdeu! Seu país era: "+GREEN+"{}".format(pais_acerto)+RESET)
         if input("Quer jogar novamente? [s/n] ")=="s":
             i=20
         else:
