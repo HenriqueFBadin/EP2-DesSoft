@@ -119,6 +119,8 @@ while i>0:
         dicas={} #Dicionário onde as keys são as dicas e os valores são as respostas
         colores = '' #Serve para acrescentar as cores pedidas nas dicas no terminal
         mensagem='' #Print das cores da bandeira
+        opcoes = ['0'] #Opções para as dicas
+        ganho = False
         j = 0
 
     #Palpite do usuário que da início ao jogo:
@@ -148,6 +150,7 @@ while i>0:
         #Se o País escolhido = País sorteado:
         if dados_ps==pd_escolhido:
             print("Parabéns! Você acertou o país em {} tentativas!".format(20-i))
+            ganho = True
             i=0
         
         #Caso o país escolhido não seja o mesmo que o sorteado:
@@ -159,6 +162,7 @@ while i>0:
 
     #Sistema de dicas para cor da bandeira funciona apenas para a 1a tentativa(resolver posteriormente):
     elif palpite.lower()=="dica" or palpite.lower()=="dicas":
+        opcoes = ['0']
 
         print("Mercado de Dicas")
         print("----------------------------------------")
@@ -166,18 +170,39 @@ while i>0:
             print('>>> Infelizmente, acabou seu estoque de dicas! <<<')
         if i>= 4:
             print('1. Cor da bandeira  - custa 4 tentativas')
+            opcoes.append('1')
+
         if i>=3:
             print('2. Letra da capital - custa 3 tentativas')
+            opcoes.append('2')
+
         if i>=6:
             print('3. Área             - custa 6 tentativas')
+            opcoes.append('3')
+
         if i>=5:
             print('4. População        - custa 5 tentativas')
+            opcoes.append('4')
+
         if i>=7:
             print('5. Continente       - custa 7 tentativas')
+            opcoes.append('5')
+
         print('0. Sem dica')
         print("----------------------------------------")
 
-        opcao = input("\nEscolha sua opção [0|1|2|3|4|5]: ")
+        z = ''
+        cont = 0
+        for option in opcoes:
+            if cont == len(opcoes)-1:
+                z = z + option
+
+            else:
+                z = z + option +'|'
+            
+            cont +=1
+
+        opcao = input("\nEscolha sua opção [{}]: " .format(z))
 
         #Sistema dica 1:
         if opcao == "1":
@@ -247,7 +272,8 @@ while i>0:
 
     #Derrota/Pergunta se quer jogar novamente:
     if i==0:
-        print("Você perdeu! Seu país era: {}".format(pais_acerto))
+        if ganho != True:
+            print("Você perdeu! Seu país era: {}".format(pais_acerto))
         if input("Quer jogar novamente? [s/n] ")=="s":
             i=20
         else:
